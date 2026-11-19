@@ -15,18 +15,16 @@ It talks to the trial environment over HTTP, reads one game at a time,
 and picks a move with a fixed node budget — no clock anywhere, so every
 trial replays byte for byte.
 
-The search is principal variation search (PVS) with aspiration windows
-around the previous iteration's score, and late-move reductions (LMR)
-for quiet moves deep in the tree. Leaves are extended by a capture-only
+The search is principal variation search (PVS) with late-move
+reductions (LMR) for quiet moves deep in the tree, plus null-move
+pruning at depth 3 and above. Leaves are extended by a capture-only
 quiescence search, and positions in check are searched one ply deeper
 instead of going quiet. A transposition table (Zobrist-hashed, with
 castling rights and the en-passant file in the key), two killer moves
 per ply, and MVV-LVA capture ordering keep the tree small.
 
-The board is 0x88. Evaluation is material plus piece-square tables
-and a small bonus for the bishop pair. Repetitions inside the search
-score as draws, and the game history is replayed from the start
-position so positions already seen on the board count too.
+The board is 0x88. Evaluation is material plus piece-square tables.
+Repetitions inside the search score as draws.
 
 ## Budget and trials
 
